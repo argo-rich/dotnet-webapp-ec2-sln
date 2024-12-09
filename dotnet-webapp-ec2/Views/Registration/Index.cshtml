@@ -1,0 +1,62 @@
+﻿@using Northwind.EntityModels
+@model User
+
+@{
+    string title = "User Registration";
+    ViewData["Title"] = title;
+}
+<h1 class="display-4">@title</h1>
+
+@if (ViewBag.SuccessMessage == "true")
+{
+    <div>&nbsp;</div>
+    <div class="alert-success p-2">Account created successfully!  Click <a href="/Login">here</a> to login.</div>
+}
+else
+{
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert-danger p-2">@ViewBag.ErrorMessage</div>
+    }
+    <i>Register for your account:</i>
+    <br />
+    <div>&nbsp;</div>
+    <form class="row g-3" asp-action="Index" asp-controller="Registration" method="post">
+        <div class="row m-2">
+            <div class="col">
+                <input type="text" class="form-control" asp-for="Username" placeholder="Username" aria-label="Username">
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col">
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password" aria-label="Password">
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <input type="hidden" asp-for="EncryptedPassword" value="0">
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col">
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="First name" aria-label="First name">
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col">
+                <input type="text" class="form-control" asp-for="LastName" placeholder="Last name" aria-label="Last name">
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col">
+                <input type="text" class="form-control" asp-for="Email" placeholder="Email address" aria-label="Email">
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col">
+                <input type="submit" id="registerSubmit" class="btn btn-primary" style="width: fit-content;" value="Register" aria-label="Submit button">
+            </div>
+        </div>
+    </form>
+}

@@ -1,0 +1,29 @@
+﻿@using Northwind.EntityModels
+@model List<Employee>
+@{
+    string title = "Our Employees";
+    ViewData["Title"] = title;
+}
+<h1 class="display-4">@title</h1>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert-danger p-2">@ViewBag.ErrorMessage</div>
+}
+@if (Model is not null)
+{
+    <br />
+    <div class="row">
+        @foreach (Employee e in Model)
+        {
+            <div class="col-sm-3">
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">@e.FirstName @e.LastName</div>
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">@e.Country</h5>
+                        <p class="card-text">@e.Notes</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

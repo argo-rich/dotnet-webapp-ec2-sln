@@ -1,0 +1,54 @@
+﻿@using Northwind.EntityModels
+@model Category
+
+@{
+    ViewData["Title"] = "Category Detail";
+    ViewBag.BgImage = $"/images/category{Model?.CategoryId}.jpeg";
+}
+
+<h2 class="display-2">@ViewData["Title"]</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert-danger p-2">@ViewBag.ErrorMessage</div>
+}
+@if (Model is not null)
+{
+    <div id="categories" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="~/images/category@(Model.CategoryId).jpeg" alt="@Model.CategoryName" />
+                <div id="CategoryDetail" class="carousel-caption">
+                    <h6 class="display-6">@Model.CategoryName</h6>                
+                    <p id="CatDesc">@Model.Description</p>
+                    Our @Model.Products.Count @Model.CategoryName Products:
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Unit Price</th>
+                                <th>Units In Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Product p in Model.Products)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => p.ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => p.UnitPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => p.UnitsInStock)
+                                    </td>
+                                </tr>
+                            }
+                        <tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

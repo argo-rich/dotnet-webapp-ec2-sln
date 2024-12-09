@@ -1,0 +1,31 @@
+﻿@using Northwind.EntityModels
+@model List<Category>
+
+@{
+    ViewData["Title"] = "Product Categories";
+}
+
+
+<h1 class="display-4">Product Categories</h1>
+<br />
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Category c in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => c.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => c.Description)
+                </td>
+            </tr>
+        }
+    <tbody>
+</table>

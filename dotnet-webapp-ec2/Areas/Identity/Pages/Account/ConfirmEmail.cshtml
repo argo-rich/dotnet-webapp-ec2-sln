@@ -1,0 +1,13 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<h1 class="display-4">@ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+@if (!Model.StatusMessage.StartsWith("Error"))
+{
+    <div>Please <a asp-area="Identity" asp-page="/Account/Login">log in</a> to continue.</div>
+}
