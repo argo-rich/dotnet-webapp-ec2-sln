@@ -104,7 +104,7 @@ namespace PasswordHash
         }
 
         /// <summary>
-        /// Computes the PBKDF2-SHA1 hash of a password.
+        /// Computes the PBKDF2-SHA3 hash of a password.
         /// </summary>
         /// <param name="password">The password to hash.</param>
         /// <param name="salt">The salt.</param>
