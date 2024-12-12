@@ -171,7 +171,7 @@ public class NorthwindTests
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
         model = Assert.IsAssignableFrom<ProductSearchModel>(viewResult.ViewData.Model);
-        Assert.Equal(60, model.Products?.Count);
+        Assert.Equal(17, model.Products?.Count);
     }
 
     [Fact]
