@@ -41,7 +41,7 @@ public partial class NorthwindContext : DbContext
   {
     if (!optionsBuilder.IsConfigured)
     {
-      string database = "Northwind.db";
+      string database = $"NorthwindDb{Path.DirectorySeparatorChar}Northwind.db";
       string dir = Environment.CurrentDirectory;
       string path = string.Empty;
 

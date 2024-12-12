@@ -19,11 +19,11 @@ public class ProductController : Controller
     }
 
     // /Product or /Product/Index
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        IEnumerable<Product> products = _db.Products
+        List<Product> products = await _db.Products
           .Include(p => p.Category)
-          .Include(p => p.Supplier);
+          .Include(p => p.Supplier).ToListAsync();
 
         if (!products.Any())
         {
@@ -72,7 +72,7 @@ public class ProductController : Controller
 
         model.Categories = categories;
         model.Products = products.ToList();
-        model.RequestMethod = Request.Method;
+        if (Request != null && Request.Method != null) model.RequestMethod = Request.Method;
 
         return View(model);
     }

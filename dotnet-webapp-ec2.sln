@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Northwind.DataContext.Sqlit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserManagement", "UserManagement\UserManagement.csproj", "{969F669E-3550-447E-B01E-F1C1B01008DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Northwind.UnitTests\UnitTests.csproj", "{2214B6BA-49AA-4CDC-9DEC-B0F2255A7E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Northwind.UnitTests", "Northwind.UnitTests\Northwind.UnitTests.csproj", "{2214B6BA-49AA-4CDC-9DEC-B0F2255A7E72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

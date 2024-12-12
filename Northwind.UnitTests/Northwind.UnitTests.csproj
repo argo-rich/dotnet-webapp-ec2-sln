@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\dotnet-webapp-ec2\dotnet-webapp-ec2.csproj" />
     <ProjectReference Include="..\UserManagement\UserManagement.csproj" />
   </ItemGroup>
 
