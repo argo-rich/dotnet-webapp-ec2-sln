@@ -6,7 +6,7 @@ tar cjvf ..\publish.tar.bz2 .
 
 REM scp publish.tar.bz2 to the server
 cd ..
-scp -i %NORTHWIND_KEY% .\publish.tar.bz2 ec2-user@ec2-34-227-151-78.compute-1.amazonaws.com:~/dotnet-webapp-ec2
+scp -i %NORTHWIND_KEY% .\publish.tar.bz2 %NORTHWIND_USER%@%NORTHWIND_SERVER%:~/dotnet-webapp-ec2
 
 REM run the deploy script on the server
-ssh -i %NORTHWIND_KEY% ec2-user@ec2-34-227-151-78.compute-1.amazonaws.com "source /home/ec2-user/.bash_profile && /home/ec2-user/scripts/deploy-publish-file.sh"
+ssh -i %NORTHWIND_KEY% %NORTHWIND_USER%@%NORTHWIND_SERVER% "source /home/%NORTHWIND_USER%/.bash_profile && /home/%NORTHWIND_USER%/scripts/deploy-publish-file.sh"
