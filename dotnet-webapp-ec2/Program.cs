@@ -33,6 +33,9 @@ builder.WebHost.ConfigureKestrel(options =>
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
+// set up logins to expire after 20 minutes
+builder.Services.ConfigureApplicationCookie(options => options.ExpireTimeSpan = TimeSpan.FromMinutes(20));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
