@@ -1,4 +1,4 @@
-TO DEPLOY THIS TO THE EC2 INSTANCE IN AWS:
+TO DEPLOY THIS TO THE EC2 INSTANCE MANUALLY:
 
 1. Publish the files to the "dotnet-webapp-ec2\publish" folder:  
 a. Open Powershell from the project directory (E:\Documents\Code\source\repos\dotnet\dotnet-webapp-ec2-sln\dotnet-webapp-ec2)
