@@ -1,57 +1,47 @@
-﻿using Amazon.SimpleEmail.Model;
-using Amazon.SimpleEmail;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using PostmarkDotNet;
 
 namespace dotnet_webapp_ec2.Services;
 
 public class EmailSender : IEmailSender
 {
     private readonly ILogger<EmailSender> _logger;
-
-    private const string FromAddress = "Rich Argo <rich@argohaus.com>";
-    private static string AwsAccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID")!;
-    private static string AwsSecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY")!;
-
-    public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
-                       ILogger<EmailSender> logger)
-    {
-        Options = optionsAccessor.Value;
-        _logger = logger;
-    }
+    private IConfiguration _configuration;
+    private string fromAddress;
+    private string messageStream = Environment.GetEnvironmentVariable("PSTMRK_STREAM")!;
+    private string serverToken = Environment.GetEnvironmentVariable("PSTMRK_TOKEN")!;
 
     public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
 
-    public async Task SendEmailAsync(string toEmail, string subject, string message)
+    public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
+                   ILogger<EmailSender> logger,
+                   IConfiguration configuration)
     {
-        // Setup the email recipients.
-        var oDestination = new Destination(new List<string>() { toEmail });
+        Options = optionsAccessor.Value;
+        _logger = logger;
+        _configuration = configuration;
+        fromAddress = _configuration.GetValue<string>("FromEmail")!;
+    }
 
-        // Create the email subject.
-        var oSubject = new Content(subject);
-
-        // Create the email body.
-        var oBody = new Body();
-        var oHtml = new Content();
-        oHtml.Charset = "UTF-8";
-        oHtml.Data = message;
-        oBody.Html = oHtml;
-
-
-        // Create and transmit the email to the recipients via Amazon SES.
-        var oMessage = new Message(oSubject, oBody);
-        var request = new SendEmailRequest(FromAddress, oDestination, oMessage);
-
-        try
+    public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+    {
+        var message = new PostmarkMessage()
         {
-            using (var client = new AmazonSimpleEmailServiceClient(AwsAccessKey, AwsSecretKey, Amazon.RegionEndpoint.USEast1))
-            {
-                await client.SendEmailAsync(request);
-            }
-        }
-        catch (Exception ex)
+            To = email,
+            From = fromAddress,
+            TrackOpens = false,
+            Subject = subject,
+            HtmlBody = htmlMessage,
+            MessageStream = messageStream
+        };
+
+        var client = new PostmarkClient(serverToken);
+        var sendResult = await client.SendMessageAsync(message);
+
+        if (sendResult.Status != PostmarkStatus.Success)
         {
-            _logger.LogError(ex, "Exception caught in SendEmailAsync");
+            _logger.LogError("Mail send failed.");
         }
     }
 }
